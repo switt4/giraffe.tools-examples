@@ -24,14 +24,31 @@ io_data_sink = pe.Node(interface = io.DataSink(), name='io_data_sink')
 fsl_bet = pe.MapNode(interface = fsl.BET(), name='fsl_bet', iterfield = ['in_file'])
 
 #Wraps the executable command ``flirt``.
-fsl_flirt = pe.MapNode(interface = fsl.FLIRT(), name='fsl_flirt', iterfield = ['in_file', 'reference'])
+flirt_EPItoT1 = pe.MapNode(interface = fsl.FLIRT(), name='flirt_EPItoT1', iterfield = ['in_file', 'reference'])
+
+#Wraps the executable command ``flirt``.
+flirt_T1toMNI = pe.Node(interface = fsl.FLIRT(), name='flirt_T1toMNI')
+flirt_T1toMNI.inputs.reference = $FSLDIR/data/standard/MNI152_T1_2mm_brain.nii.gz
+
+#Wraps the executable command ``convert_xfm``.
+fsl_convert_xfm = pe.MapNode(interface = fsl.ConvertXFM(), name='fsl_convert_xfm', iterfield = ['in_file', 'in_file2'])
+fsl_convert_xfm.inputs.concat_xfm = True
+
+#Wraps the executable command ``flirt``.
+flirt_EPItoMNI = pe.MapNode(interface = fsl.FLIRT(), name='flirt_EPItoMNI', iterfield = ['in_file', 'in_matrix_file'])
+flirt_EPItoMNI.inputs.reference = $FSLDIR/data/standard/MNI152_T1_2mm_brain.nii.gz
 
 #Create a workflow to connect all those nodes
 analysisflow = nipype.Workflow('MyWorkflow')
 analysisflow.connect(io_select_files, "func", fsl_mcflirt, "in_file")
 analysisflow.connect(io_select_files, "anat", fsl_bet, "in_file")
-analysisflow.connect(fsl_bet, "out_file", fsl_flirt, "reference")
-analysisflow.connect(fsl_mcflirt, "mean_img", fsl_flirt, "in_file")
+analysisflow.connect(fsl_bet, "out_file", flirt_EPItoT1, "reference")
+analysisflow.connect(fsl_mcflirt, "mean_img", flirt_EPItoT1, "in_file")
+analysisflow.connect(fsl_bet, "out_file", flirt_T1toMNI, "in_file")
+analysisflow.connect(flirt_EPItoT1, "out_matrix_file", fsl_convert_xfm, "in_file")
+analysisflow.connect(flirt_T1toMNI, "out_matrix_file", fsl_convert_xfm, "in_file2")
+analysisflow.connect(fsl_mcflirt, "out_file", flirt_EPItoMNI, "in_file")
+analysisflow.connect(fsl_convert_xfm, "out_file", flirt_EPItoMNI, "in_matrix_file")
 
 #Run the workflow
 plugin = 'MultiProc' #adjust your desired plugin here
