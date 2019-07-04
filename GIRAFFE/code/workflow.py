@@ -20,7 +20,8 @@ io_select_files.inputs.anat = 'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1
 io_select_files.inputs.func = 'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz
 
 #Generic datasink module to store structured outputs
-io_data_sink = pe.Node(interface = io.DataSink(), name='io_data_sink')
+io_data_sink = pe.MapNode(interface = io.DataSink(), name='io_data_sink', iterfield = ['smoothedEPI', 'framewiseDisplacement', 'mcflirtPar', 'aCompCorComponents'])
+io_data_sink.inputs.parameterization = True
 
 #Wraps the executable command ``bet``.
 fsl_bet = pe.MapNode(interface = fsl.BET(), name='fsl_bet', iterfield = ['in_file'])
@@ -45,14 +46,15 @@ afni_blur_to_fwhm = pe.Node(interface = afni.BlurToFWHM(), name='afni_blur_to_fw
 afni_blur_to_fwhm.inputs.fwhm = 6
 
 #Calculate the :abbr:`FD (framewise displacement)` as in [Power2012]_.
-confounds_framewise_displacement = pe.Node(interface = confounds.FramewiseDisplacement(), name='confounds_framewise_displacement')
+confounds_framewise_displacement = pe.MapNode(interface = confounds.FramewiseDisplacement(), name='confounds_framewise_displacement', iterfield = ['in_file'])
 confounds_framewise_displacement.inputs.parameter_source = 'FSL'
 
 #Anatomical compcor: for inputs and outputs, see CompCor.
-confounds_acomp_cor = pe.Node(interface = confounds.ACompCor(), name='confounds_acomp_cor')
+confounds_acomp_cor = pe.MapNode(interface = confounds.ACompCor(), name='confounds_acomp_cor', iterfield = ['realigned_file', 'mask_files'])
+confounds_acomp_cor.inputs.merge_method = 'union'
 
 #Wraps the executable command ``fast``.
-fsl_fast = pe.Node(interface = fsl.FAST(), name='fsl_fast')
+fsl_fast = pe.MapNode(interface = fsl.FAST(), name='fsl_fast', iterfield = ['in_files'])
 
 #Create a workflow to connect all those nodes
 analysisflow = nipype.Workflow('MyWorkflow')
@@ -69,6 +71,13 @@ analysisflow.connect(flirt_EPItoMNI, "out_file", afni_blur_to_fwhm, "in_file")
 analysisflow.connect(fsl_mcflirt, "par_file", confounds_framewise_displacement, "in_file")
 analysisflow.connect(fsl_bet, "out_file", fsl_fast, "in_files")
 analysisflow.connect(fsl_mcflirt, "out_file", confounds_acomp_cor, "realigned_file")
+analysisflow.connect(fsl_fast, "partial_volume_files", confounds_acomp_cor, "mask_files")
+analysisflow.connect(fsl_fast, "partial_volume_map", confounds_acomp_cor, "mask_files")
+analysisflow.connect(fsl_fast, "tissue_class_files", confounds_acomp_cor, "mask_files")
+analysisflow.connect(afni_blur_to_fwhm, "out_file", io_data_sink, "smoothedEPI")
+analysisflow.connect(confounds_framewise_displacement, "out_file", io_data_sink, "framewiseDisplacement")
+analysisflow.connect(fsl_mcflirt, "par_file", io_data_sink, "mcflirtPar")
+analysisflow.connect(confounds_acomp_cor, "components_file", io_data_sink, "aCompCorComponents")
 
 #Run the workflow
 plugin = 'MultiProc' #adjust your desired plugin here

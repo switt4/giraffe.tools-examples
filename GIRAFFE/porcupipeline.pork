@@ -51,6 +51,34 @@
     {
       "from": "9c776c1f-2e59-41f1-a35d-6b64f7374904",
       "to": "54422ef7-8cd6-41c8-8759-2cf3f4ec57a0"
+    },
+    {
+      "from": "ef8dedf2-2449-4b19-a337-91ddb1f6549b",
+      "to": "2a947910-9cb3-479e-8c8d-e4c22dc7b375"
+    },
+    {
+      "from": "7e7b9897-433d-4966-9208-e5eeb3a0cdc4",
+      "to": "2a947910-9cb3-479e-8c8d-e4c22dc7b375"
+    },
+    {
+      "from": "0e176e2d-8846-4538-9a9a-491c0450d1a0",
+      "to": "2a947910-9cb3-479e-8c8d-e4c22dc7b375"
+    },
+    {
+      "from": "1ddd8a86-bfb8-4c38-bee4-1b87d32b6868",
+      "to": "9967c8ed-1211-48d2-a080-de4108deabe5"
+    },
+    {
+      "from": "65a54782-fa23-4b06-bb16-8c6268888c44",
+      "to": "4ade4596-0e2d-42d7-ba0a-f9c8f7051154"
+    },
+    {
+      "from": "9fbec351-9fde-45c4-8094-c31e49132698",
+      "to": "fb0cb4a2-7e32-4e69-b8a4-8f0cfbb37a4a"
+    },
+    {
+      "from": "df077f28-947f-4163-99b4-b666bb3bbdb4",
+      "to": "38247fba-cc03-4690-9562-4c8e33b7d463"
     }
   ],
   "nodes": [
@@ -965,8 +993,8 @@
           "name": "parameterization",
           "output": false,
           "outputPort": false,
-          "value": "",
-          "visible": false,
+          "value": "True",
+          "visible": true,
           "iterator": false
         },
         {
@@ -1178,11 +1206,63 @@
           "value": "",
           "visible": true,
           "iterator": false
+        },
+        {
+          "base": "smoothedEPI",
+          "editable": true,
+          "id": "a055afed-a524-4f12-ba06-6514a0d18eac",
+          "input": true,
+          "inputPort": "9967c8ed-1211-48d2-a080-de4108deabe5",
+          "name": "smoothedEPI",
+          "output": true,
+          "outputPort": "92351e12-ac74-4933-a7a7-969f30095195",
+          "value": "",
+          "visible": true,
+          "iterator": true
+        },
+        {
+          "base": "framewiseDisplacement",
+          "editable": true,
+          "id": "ea5e362d-91cc-4cae-98ca-bb6d87e070ca",
+          "input": true,
+          "inputPort": "4ade4596-0e2d-42d7-ba0a-f9c8f7051154",
+          "name": "framewiseDisplacement",
+          "output": true,
+          "outputPort": "8fa8dbf2-6cfe-4751-a01c-ea768b4ec6e0",
+          "value": "",
+          "visible": true,
+          "iterator": true
+        },
+        {
+          "base": "mcflirtPar",
+          "editable": true,
+          "id": "92000b8c-a829-4a7b-a4eb-ead20341fbd8",
+          "input": true,
+          "inputPort": "fb0cb4a2-7e32-4e69-b8a4-8f0cfbb37a4a",
+          "name": "mcflirtPar",
+          "output": true,
+          "outputPort": "37940ee8-e7ba-4f9a-8513-17a28fe7fc5f",
+          "value": "",
+          "visible": true,
+          "iterator": true
+        },
+        {
+          "base": "aCompCorComponents",
+          "editable": true,
+          "id": "db47bb5e-5581-4519-8346-6ff8258012b2",
+          "input": true,
+          "inputPort": "38247fba-cc03-4690-9562-4c8e33b7d463",
+          "name": "aCompCorComponents",
+          "output": true,
+          "outputPort": "5aa892ab-bead-4972-accb-062249e56e24",
+          "value": "",
+          "visible": true,
+          "iterator": true
         }
       ],
       "position": [
-        1335.279810685483,
-        647.9606888236548
+        1586.351343888608,
+        430.6873733939673
       ],
       "code": [
         {
@@ -5585,8 +5665,8 @@
         }
       ],
       "position": [
-        840.4275200124084,
-        306.47326146579053
+        838.0133964772522,
+        246.11956273532178
       ],
       "code": [
         {
@@ -5870,7 +5950,7 @@
       ],
       "position": [
         1126.4263833535988,
-        345.7700974733067
+        343.35597393815044
       ],
       "code": [
         {
@@ -5918,7 +5998,7 @@
           "outputPort": false,
           "value": "",
           "visible": true,
-          "iterator": false
+          "iterator": true
         },
         {
           "base": "parameter_source",
@@ -6223,7 +6303,7 @@
           "outputPort": false,
           "value": "",
           "visible": true,
-          "iterator": false
+          "iterator": true
         },
         {
           "base": "mask_files",
@@ -6244,7 +6324,7 @@
           "outputPort": false,
           "value": "",
           "visible": true,
-          "iterator": false
+          "iterator": true
         },
         {
           "base": "merge_method",
@@ -6263,8 +6343,8 @@
           "name": "merge_method",
           "output": false,
           "outputPort": false,
-          "value": "",
-          "visible": false,
+          "value": "'union'",
+          "visible": true,
           "iterator": false
         },
         {
@@ -6612,7 +6692,7 @@
           "outputPort": false,
           "value": "",
           "visible": true,
-          "iterator": false
+          "iterator": true
         },
         {
           "base": "out_basename",
