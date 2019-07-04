@@ -25,6 +25,7 @@ io_data_sink.inputs.parameterization = True
 
 #Wraps the executable command ``bet``.
 fsl_bet = pe.MapNode(interface = fsl.BET(), name='fsl_bet', iterfield = ['in_file'])
+fsl_bet.inputs.frac = 0.6
 
 #Wraps the executable command ``flirt``.
 flirt_EPItoT1 = pe.MapNode(interface = fsl.FLIRT(), name='flirt_EPItoT1', iterfield = ['in_file', 'reference'])
@@ -55,6 +56,7 @@ confounds_acomp_cor.inputs.merge_method = 'union'
 
 #Wraps the executable command ``fast``.
 fsl_fast = pe.MapNode(interface = fsl.FAST(), name='fsl_fast', iterfield = ['in_files'])
+fsl_fast.inputs.number_classes = 3
 
 #Create a workflow to connect all those nodes
 analysisflow = nipype.Workflow('MyWorkflow')
@@ -72,8 +74,6 @@ analysisflow.connect(fsl_mcflirt, "par_file", confounds_framewise_displacement, 
 analysisflow.connect(fsl_bet, "out_file", fsl_fast, "in_files")
 analysisflow.connect(fsl_mcflirt, "out_file", confounds_acomp_cor, "realigned_file")
 analysisflow.connect(fsl_fast, "partial_volume_files", confounds_acomp_cor, "mask_files")
-analysisflow.connect(fsl_fast, "partial_volume_map", confounds_acomp_cor, "mask_files")
-analysisflow.connect(fsl_fast, "tissue_class_files", confounds_acomp_cor, "mask_files")
 analysisflow.connect(afni_blur_to_fwhm, "out_file", io_data_sink, "smoothedEPI")
 analysisflow.connect(confounds_framewise_displacement, "out_file", io_data_sink, "framewiseDisplacement")
 analysisflow.connect(fsl_mcflirt, "par_file", io_data_sink, "mcflirtPar")
