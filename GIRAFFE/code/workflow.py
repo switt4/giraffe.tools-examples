@@ -14,13 +14,14 @@ import nipype.algorithms.confounds as confounds
 fsl_mcflirt = pe.MapNode(interface = fsl.MCFLIRT(), name='fsl_mcflirt', iterfield = ['in_file'])
 
 #Flexibly collect data from disk to feed into workflows.
-io_select_files = pe.Node(io.SelectFiles(templates={'anat':'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz,'func':'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz}), name='io_select_files', iterfield = ['subID", "funcRun", "taskName'])
-io_select_files.inputs.base_directory = 'bids'
-io_select_files.inputs.anat = 'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz
-io_select_files.inputs.func = 'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz
+io_select_files = pe.Node(io.SelectFiles(templates={'anat':'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz','func':'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz'}), name='io_select_files', iterfield = ['subID", "funcRun", "taskName'])
+io_select_files.inputs.base_directory = '/bids'
+io_select_files.inputs.anat = 'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz'
+io_select_files.inputs.func = 'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz'
 
 #Generic datasink module to store structured outputs
 io_data_sink = pe.MapNode(interface = io.DataSink(), name='io_data_sink', iterfield = ['smoothedEPI', 'framewiseDisplacement', 'mcflirtPar', 'aCompCorComponents'])
+io_data_sink.inputs.base_directory = '/output'
 io_data_sink.inputs.parameterization = True
 
 #Wraps the executable command ``bet``.

@@ -762,7 +762,7 @@
           "name": "base_directory",
           "output": false,
           "outputPort": false,
-          "value": "'bids'",
+          "value": "'/bids'",
           "visible": false,
           "iterator": false
         },
@@ -838,7 +838,7 @@
           "name": "anat",
           "output": true,
           "outputPort": "972fab93-7f77-4b10-a558-2c199b03a6db",
-          "value": "'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz",
+          "value": "'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz'",
           "visible": true,
           "iterator": false
         },
@@ -851,7 +851,7 @@
           "name": "func",
           "output": true,
           "outputPort": "8d5e891d-8a13-42af-a70a-90547bfee062",
-          "value": "'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz",
+          "value": "'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz'",
           "visible": true,
           "iterator": false
         },
@@ -943,8 +943,8 @@
           "name": "base_directory",
           "output": false,
           "outputPort": false,
-          "value": "",
-          "visible": false,
+          "value": "'/output'",
+          "visible": true,
           "iterator": false
         },
         {
