@@ -762,7 +762,7 @@
           "name": "base_directory",
           "output": false,
           "outputPort": false,
-          "value": "'/bids'",
+          "value": "bidsDir",
           "visible": false,
           "iterator": false
         },
@@ -838,7 +838,7 @@
           "name": "anat",
           "output": true,
           "outputPort": "972fab93-7f77-4b10-a558-2c199b03a6db",
-          "value": "'sub-{subID}/anat/sub-{subID}_acq-MPRAGE_run-01_T1w.nii.gz'",
+          "value": "'sub-{subID}/anat/sub-{subID}_*_T1w.nii.gz'",
           "visible": true,
           "iterator": false
         },
@@ -851,7 +851,7 @@
           "name": "func",
           "output": true,
           "outputPort": "8d5e891d-8a13-42af-a70a-90547bfee062",
-          "value": "'sub-{subID}/func/sub-{subID}_task-{taskID}_run-{runID}_bold.nii.gz'",
+          "value": "'sub-{subID}/func/sub-{subID}_*_bold.nii.gz'",
           "visible": true,
           "iterator": false
         },
@@ -864,33 +864,7 @@
           "name": "subID",
           "output": false,
           "outputPort": false,
-          "value": "",
-          "visible": true,
-          "iterator": true
-        },
-        {
-          "base": "funcRun",
-          "editable": true,
-          "id": "5df9270d-d920-4500-a81f-e3b9b6a08eae",
-          "input": true,
-          "inputPort": "75c87eb1-06a8-49e1-b12d-0a180ec971cd",
-          "name": "funcRun",
-          "output": false,
-          "outputPort": false,
-          "value": "",
-          "visible": true,
-          "iterator": true
-        },
-        {
-          "base": "taskName",
-          "editable": true,
-          "id": "a6b94ec9-30d8-486f-84eb-ef61f145a477",
-          "input": true,
-          "inputPort": "bcbf2ab6-e42e-470c-a327-fec99657f832",
-          "name": "taskName",
-          "output": false,
-          "outputPort": false,
-          "value": "",
+          "value": "subID",
           "visible": true,
           "iterator": true
         }
@@ -943,7 +917,7 @@
           "name": "base_directory",
           "output": false,
           "outputPort": false,
-          "value": "'/output'",
+          "value": "outDir",
           "visible": true,
           "iterator": false
         },
