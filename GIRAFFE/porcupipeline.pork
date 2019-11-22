@@ -190,7 +190,7 @@
           "name": "anat",
           "output": true,
           "outputPort": "972fab93-7f77-4b10-a558-2c199b03a6db",
-          "value": "'sub-{subID}/anat/sub-{subID}_*_T1w.nii.gz'",
+          "value": "'sub-{sub_id}/anat/sub-{sub_id}_*_T1w.nii.gz'",
           "visible": true,
           "iterator": false
         },
@@ -203,7 +203,7 @@
           "name": "func",
           "output": true,
           "outputPort": "8d5e891d-8a13-42af-a70a-90547bfee062",
-          "value": "'sub-{subID}/func/sub-{subID}_*_bold.nii.gz'",
+          "value": "'sub-{sub_id}/func/sub-{sub_id}_*_bold.nii.gz'",
           "visible": true,
           "iterator": false
         },
@@ -216,7 +216,7 @@
           "name": "subID",
           "output": false,
           "outputPort": false,
-          "value": "subID",
+          "value": "sub_id",
           "visible": true,
           "iterator": true
         }
@@ -266,7 +266,7 @@
           "name": "in_file",
           "output": false,
           "outputPort": false,
-          "value": "'sub-{subID}/func/sub-{subID}_*_bold.nii.gz'",
+          "value": "'sub-{sub_id}/func/sub-{sub_id}_*_bold.nii.gz'",
           "visible": true,
           "iterator": true
         },
@@ -925,7 +925,7 @@
           "name": "in_file",
           "output": false,
           "outputPort": false,
-          "value": "'sub-{subID}/anat/sub-{subID}_*_T1w.nii.gz'",
+          "value": "'sub-{sub_id}/anat/sub-{sub_id}_*_T1w.nii.gz'",
           "visible": true,
           "iterator": true
         },

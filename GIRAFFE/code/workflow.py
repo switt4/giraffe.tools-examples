@@ -11,11 +11,11 @@ import nipype.interfaces.afni as afni
 import nipype.algorithms.confounds as confounds
 
 #Flexibly collect data from disk to feed into workflows.
-io_select_files = pe.Node(io.SelectFiles(templates={'anat':'sub-{subID}/anat/sub-{subID}_*_T1w.nii.gz','func':'sub-{subID}/func/sub-{subID}_*_bold.nii.gz'}), name='io_select_files', iterfield = ['subID'])
+io_select_files = pe.Node(io.SelectFiles(templates={'anat':'sub-{sub_id}/anat/sub-{sub_id}_*_T1w.nii.gz','func':'sub-{sub_id}/func/sub-{sub_id}_*_bold.nii.gz'}), name='io_select_files', iterfield = ['subID'])
 io_select_files.inputs.base_directory = bids_dir
-io_select_files.inputs.anat = 'sub-{subID}/anat/sub-{subID}_*_T1w.nii.gz'
-io_select_files.inputs.func = 'sub-{subID}/func/sub-{subID}_*_bold.nii.gz'
-io_select_files.iterables = [('subID', subID)]
+io_select_files.inputs.anat = 'sub-{sub_id}/anat/sub-{sub_id}_*_T1w.nii.gz'
+io_select_files.inputs.func = 'sub-{sub_id}/func/sub-{sub_id}_*_bold.nii.gz'
+io_select_files.iterables = [('subID', sub_id)]
 
 #Wraps the executable command ``mcflirt``.
 fsl_mcflirt = pe.MapNode(interface = fsl.MCFLIRT(), name='fsl_mcflirt', iterfield = ['in_file'])
